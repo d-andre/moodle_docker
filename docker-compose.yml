@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  apache:
+    container_name: apache_${IMAGE_NAME}
+    build:
+      context: .
+      dockerfile: apache.dockerfile
+    depends_on:
+      - mariadb
+    expose:
+      - 80
+      - 443
+      - 9003
+    volumes:
+      - ./src:/var/www/html
+      - ./moodledata:/var/www/moodledata
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+
+  mariadb:
+    container_name: mariadb_${IMAGE_NAME}
+    image: 'mariadb:10.3'
+    user: "1000:1000"
+    environment:
+      MARIADB_DATABASE: site2db
+      MARIADB_USER: site2user
+      MARIADB_PASSWORD: secret
+      MARIADB_ROOT_PASSWORD: secret
+    ports:
+      - "${MYSQL_EXTERNAL_PORT}:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+networks:
+  default:
+    external: true
+    name: nginx-proxy
+

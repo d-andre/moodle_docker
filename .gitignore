@@ -1,0 +1,6 @@
+src
+mysql
+moodledata
+.dcignore
+.env
+.idea
