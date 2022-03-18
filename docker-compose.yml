@@ -32,6 +32,17 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql:delegated
 
+  npm:
+    image: node:latest
+    container_name: npm
+    user: "1000:1000"
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 3000:3000
+      - 3001:3001
+    working_dir: /var/www/html
+
 networks:
   default:
     external: true
