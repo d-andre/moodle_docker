@@ -13,8 +13,8 @@ services:
       - 443
       - 9003
     volumes:
-      - ./src:/var/www/html
-      - ./moodledata:/var/www/moodledata
+      - ./src:/var/www/html:delegated
+      - ./moodledata:/var/www/moodledata:delegated
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
 
@@ -30,7 +30,7 @@ services:
     ports:
       - "${MYSQL_EXTERNAL_PORT}:3306"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./mysql:/var/lib/mysql:delegated
 
 networks:
   default:
